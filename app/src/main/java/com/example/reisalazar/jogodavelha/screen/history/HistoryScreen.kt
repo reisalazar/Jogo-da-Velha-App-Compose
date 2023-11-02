@@ -1,34 +1,79 @@
 package com.example.reisalazar.jogodavelha.screen.history
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.reisalazar.jogodavelha.model.Game
+import com.example.reisalazar.jogodavelha.screen.game.GameScreen
 import java.time.format.DateTimeFormatter
 
-//@Composable
-//fun HistoryScreen(
+@Composable
+fun HistoryScreen(
+//    navController: NavController,
 //    games: List<Game>
-//) {
-//    LazyColumn {
+) {
+    Column(
+        modifier = Modifier
+            .padding(6.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start
+    ) {
+//        TopAppBar(C) {
+        Row(horizontalArrangement = Arrangement.Start,
+        modifier = Modifier.fillMaxWidth()) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Arrow Back",
+                Modifier
+                    .size(50.dp)
+                    .clickable {
+//                        navController.popBackStack()
+                    }, tint = Color(0XFF007AFF)
+            )
+            Text(
+                "Voltar",
+                style = MaterialTheme.typography.h4,
+                color = Color(0XFF007AFF),
+                fontWeight = FontWeight.Bold
+            )
+
+
+        }
+        Text(
+            modifier = Modifier.padding(top = 36.dp, start = 18.dp),
+            text = "Histórico",
+            style = MaterialTheme.typography.h2,
+            fontWeight = FontWeight.Bold
+        )
+
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(6.dp)
+    ) {
 //        items(games) { game ->
 //            NoteRow(player = note, onNoteClicked = {
 //                onRemoveNote(note)
 //            })
-//        }
-//    }
-//}
+    }
+}
+
 //@Composable
 //fun NoteRow(
 //    modifier: Modifier = Modifier,
@@ -59,3 +104,9 @@ import java.time.format.DateTimeFormatter
 //    }
 //
 //}
+
+@Preview(showBackground = true)
+@Composable
+fun HistoryScreenPreview() {
+    HistoryScreen()
+}

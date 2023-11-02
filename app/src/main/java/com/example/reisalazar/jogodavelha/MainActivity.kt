@@ -1,5 +1,6 @@
 package com.example.reisalazar.jogodavelha
 
+import GameNavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,17 +18,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JogoDaVelhaTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    val gameViewModel: GameViewModel by viewModels()
-//                    JogoDaVelhaApp(gameViewModel = gameViewModel)
-                }
+            MyApp {
+                GameNavigation()
             }
+
+            val gameViewModel: GameViewModel by viewModels()
+//          JogoDaVelhaApp(gameViewModel = gameViewModel)
+
         }
+    }
+}
+
+@Composable
+fun MyApp(content: @Composable () -> Unit) {
+    JogoDaVelhaTheme() {
+        content()
     }
 }
 
