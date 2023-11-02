@@ -27,7 +27,7 @@ import com.example.reisalazar.jogodavelha.model.Game
 @Composable
 fun GameScreen() {
     var turn: Boolean = true
-    val game = Game("player1", "opponent")
+    val game = Game("player1", "opponent", true)
     Scaffold() {
         Column(
             modifier = Modifier
