@@ -67,6 +67,7 @@ fun HomeScreen(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(

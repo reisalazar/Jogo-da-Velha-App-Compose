@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.reisalazar.jogodavelha.model.BoardSpaces
@@ -111,7 +110,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    fun ActionButton(card: BoardSpaces) {
+    fun ActionButton(space: BoardSpaces) {
         Card(
                 modifier = Modifier
                         .padding(all = 10.dp)
@@ -124,18 +123,18 @@ class MainActivity : ComponentActivity() {
                         .width(100.dp),
                 backgroundColor = Color.White,
                 onClick = {
-//                    viewModel.selectBox(card)
+                    gameViewModel.selectBox(space)
                 }
         ) {
             Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
             ) {
-//                Text(
-//                        text = card.showText(),
-//                        fontSize = 34.sp,
-//                        color = Color.Black
-//                )
+                Text(
+                        text = space.drawSymbol(),
+                        fontSize = 34.sp,
+                        color = Color.Black
+                )
             }
         }
     }

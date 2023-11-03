@@ -1,80 +1,55 @@
 package com.example.reisalazar.jogodavelha.screen.game
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.reisalazar.jogodavelha.components.AppButton
-import com.example.reisalazar.jogodavelha.model.BoardSpaces
-import com.example.reisalazar.jogodavelha.model.Game
 import com.example.reisalazar.jogodavelha.screen.GameViewModel
 
 @Composable
 fun GameScreen(navController: NavHostController, gameViewModel: GameViewModel) {
-    var turn: Boolean = true
     val game = gameViewModel.getGame()
-    Scaffold() {
-        Column(
-                modifier = Modifier
-                        .padding(6.dp)
-                        .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
 
+
+    Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        GameBoard(game, gameViewModel)
+        gameViewModel.loadGamer()
+
+        Column(
+            Modifier
+                .padding(16.dp)
+                .weight(1f),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                    modifier = Modifier.padding(top = 64.dp),
-                    text = "Vez do Jogador",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold
-            )
-            if (turn) {
-                Text(
-                        game.player1,
-                        style = MaterialTheme.typography.h4,
-                        color = Color(0XFF007AFF),
-                        fontWeight = FontWeight.Bold
-                )
-            } else {
-                Text(
-                        game.player2,
-                        style = MaterialTheme.typography.h4,
-                        color = Color(0xFFFF0000),
-                        fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.size(36.dp))
-
             AppButton(
-                    text = "Recomeçar",
-                    backgroundColor = Color(0XFF007AFF),
-                    textColor = Color.White,
-                    onClick = {
-                        navController.popBackStack()
-                        navController.navigate("game")
-                    }
+                text = "Recomeçar",
+                backgroundColor = Color(0XFF007AFF),
+                textColor = Color.White,
+                onClick = {
+                    gameViewModel.loadGamer()
+                }
             )
             AppButton(
-                    text = "Novo Jogo",
-                    backgroundColor = Color(0XFFD9EBFF),
-                    textColor = Color(0XFF007AFF),
-                    onClick = {
-                        navController.popBackStack()
-                        navController.navigate("home")
+                text = "Novo Jogo",
+                backgroundColor = Color(0XFFD9EBFF),
+                textColor = Color(0XFF007AFF),
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate("home")
 
-                    })
+                })
         }
     }
-
+}
