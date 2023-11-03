@@ -1,4 +1,4 @@
-package com.example.reisalazar.jogodavelha.screen
+package com.example.reisalazar.jogodavelha.screen.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -30,11 +30,12 @@ import com.example.reisalazar.jogodavelha.R
 import com.example.reisalazar.jogodavelha.components.AppButton
 import com.example.reisalazar.jogodavelha.components.AppTextField
 import com.example.reisalazar.jogodavelha.model.Game
+import com.example.reisalazar.jogodavelha.screen.GameViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: GameViewModel,
-    navController: NavHostController
+        viewModel: GameViewModel,
+        navController: NavHostController
 ) {
     var selectedOption by remember { mutableStateOf(0) }
     val options = listOf("vs Jogador", "vs Bot")
@@ -121,7 +122,7 @@ fun HomeScreen(
                             }) namePlayer2 = it
                     }
                 )
-            }else{
+            } else {
                 Spacer(modifier = Modifier.paddingFromBaseline(73.dp))
             }
             Spacer(modifier = Modifier.size(36.dp))
@@ -158,13 +159,21 @@ fun HomeScreen(
                             Game(
                                 player1 = namePlayer1,
                                 player2 = namePlayer2,
+                                boardSize = sliderPosition.toInt(),
                                 true
                             )
                         )
                         namePlayer1 = ""
                         namePlayer2 = ""
                     } else {
-                        viewModel.addGame(Game(player1 = namePlayer1, player2 = "Bot", true))
+                        viewModel.addGame(
+                            Game(
+                                player1 = namePlayer1,
+                                player2 = "Bot",
+                                boardSize = sliderPosition.toInt(),
+                                true
+                            )
+                        )
                     }
                     navController.navigate("game")
                 })
@@ -177,5 +186,4 @@ fun HomeScreen(
                 })
         }
     }
-
 }

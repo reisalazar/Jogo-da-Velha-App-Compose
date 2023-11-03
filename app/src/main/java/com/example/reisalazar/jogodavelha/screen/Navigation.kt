@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.reisalazar.jogodavelha.screen.game.GameScreen
 import com.example.reisalazar.jogodavelha.screen.history.HistoryScreen
+import com.example.reisalazar.jogodavelha.screen.home.HomeScreen
 
 @Composable
 fun Navigation(navController: NavHostController, GameViewModel: GameViewModel) {
