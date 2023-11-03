@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.reisalazar.jogodavelha.screen.GameViewModel
 import com.example.reisalazar.jogodavelha.screen.HomeScreen
+import com.example.reisalazar.jogodavelha.screen.Navigation
 import com.example.reisalazar.jogodavelha.screen.game.GameScreen
 import com.example.reisalazar.jogodavelha.screen.history.HistoryScreen
 import com.example.reisalazar.jogodavelha.ui.theme.JogoDaVelhaTheme
@@ -31,14 +33,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
+    val gameViewModel: GameViewModel = viewModel()
     val navController = rememberNavController()
+    Navigation(navController, gameViewModel)
+    gameViewModel.addMockedGames()
 
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") { HomeScreen(navController = navController) }
-        composable("game") { GameScreen(navController = navController) }
-        composable("history") { HistoryScreen(navController = navController)}
-    }
 }
+
 
 //@Composable
 //fun JogoDaVelhaApp(gameViewModel: GameViewModel = viewModel()) {

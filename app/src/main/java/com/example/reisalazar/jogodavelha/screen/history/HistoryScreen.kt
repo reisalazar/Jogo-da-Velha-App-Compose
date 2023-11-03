@@ -25,10 +25,10 @@ import com.example.reisalazar.jogodavelha.screen.GameViewModel
 @Composable
 fun HistoryScreen(
     navController: NavHostController,
-//    onAddGame: (Game) -> Unit,
+    gameViewModel: GameViewModel,
 ) {
-    val gameViewModel: GameViewModel = viewModel()
-    var games: List<Game> = gameViewModel.getAllGames()
+    val games: List<Game> = gameViewModel.getAllGames().reversed()
+
     Column(
         modifier = Modifier
             .padding(6.dp)
@@ -80,11 +80,3 @@ fun HistoryScreen(
         }
     }
 }
-//
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun HistoryScreenPreview() {
-//    HistoryScreen(games = HistoryDataSource().loadGame(), navController = rememberNavController())
-//
-//}

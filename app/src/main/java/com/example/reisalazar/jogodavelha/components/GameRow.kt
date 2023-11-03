@@ -1,6 +1,5 @@
 package com.example.reisalazar.jogodavelha.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +23,11 @@ fun GameRow(
     modifier: Modifier = Modifier,
     game: Game
 ) {
+
     Surface(
         modifier
             .padding(4.dp)
             .fillMaxWidth(),
-//        color = Color(0xFF8AB7DD),
-//        elevation = 6.dp
     ) {
         Column(
             modifier
@@ -37,10 +35,8 @@ fun GameRow(
             horizontalAlignment = Alignment.Start
         ) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
-
-
                 Text(
-                    text = "\uD83C\uDFC6 ${game.player}",
+                    text = "\uD83C\uDFC6 ${game.player1}",
                     style = MaterialTheme.typography.subtitle1,
                     color = Color(0XFF007AFF),
                     fontWeight = FontWeight.Bold
@@ -49,7 +45,7 @@ fun GameRow(
                 Text(text = "VS", fontSize = 14.sp, modifier = Modifier.padding(horizontal = 4.dp))
 
                 Text(
-                    text = game.opponent,
+                    text = game.player2,
                     style = MaterialTheme.typography.subtitle1,
                     color = Color(0xFFFF0000),
                     fontWeight = FontWeight.Bold

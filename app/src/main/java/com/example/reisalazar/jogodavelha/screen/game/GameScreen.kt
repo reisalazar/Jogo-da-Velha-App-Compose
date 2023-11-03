@@ -1,8 +1,5 @@
 package com.example.reisalazar.jogodavelha.screen.game
 
-import android.widget.GridLayout
-import android.widget.GridView
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -15,18 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.reisalazar.jogodavelha.components.AppButton
 import com.example.reisalazar.jogodavelha.model.Game
+import com.example.reisalazar.jogodavelha.screen.GameViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen(navController: NavHostController) {
+fun GameScreen(navController: NavHostController, GameViewModel: GameViewModel) {
     var turn: Boolean = true
     val game = Game("player1", "opponent", true)
     Scaffold() {
@@ -47,14 +41,14 @@ fun GameScreen(navController: NavHostController) {
             )
             if (turn) {
                 Text(
-                    game.player,
+                    game.player1,
                     style = MaterialTheme.typography.h4,
                     color = Color(0XFF007AFF),
                     fontWeight = FontWeight.Bold
                 )
             }else{
                 Text(
-                    game.opponent,
+                    game.player2,
                     style = MaterialTheme.typography.h4,
                     color = Color(0xFFFF0000),
                     fontWeight = FontWeight.Bold
