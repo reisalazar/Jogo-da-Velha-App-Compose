@@ -22,7 +22,7 @@ import com.example.reisalazar.jogodavelha.screen.GameViewModel
 @Composable
 fun GameScreen(navController: NavHostController, GameViewModel: GameViewModel) {
     var turn: Boolean = true
-    val game = Game("player1", "opponent", true)
+    val game = GameViewModel.getGame()
     Scaffold() {
         Column(
             modifier = Modifier

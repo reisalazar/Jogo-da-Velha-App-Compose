@@ -1,9 +1,24 @@
 package com.example.reisalazar.jogodavelha.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Slider
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,7 +29,6 @@ import androidx.navigation.NavHostController
 import com.example.reisalazar.jogodavelha.R
 import com.example.reisalazar.jogodavelha.components.AppButton
 import com.example.reisalazar.jogodavelha.components.AppTextField
-import com.example.reisalazar.jogodavelha.components.RadioOptions
 import com.example.reisalazar.jogodavelha.model.Game
 
 @Composable
@@ -22,6 +36,10 @@ fun HomeScreen(
     viewModel: GameViewModel,
     navController: NavHostController
 ) {
+    var selectedOption by remember { mutableStateOf(0) }
+    val options = listOf("vs Jogador", "vs Bot")
+    var isVisible by remember { mutableStateOf(false) }
+
     var namePlayer1 by remember {
         mutableStateOf("")
     }
@@ -29,6 +47,7 @@ fun HomeScreen(
         mutableStateOf("")
     }
     var sliderPosition by remember { mutableStateOf(3f) }
+
 
     Column(
         modifier = Modifier.padding(6.dp),
@@ -45,7 +64,6 @@ fun HomeScreen(
             )
         }
 
-        //Content
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -56,7 +74,23 @@ fun HomeScreen(
                 fontWeight = FontWeight.Bold
             )
 
-            RadioOptions(listOf("vs Jogador", "vs Bot"))
+            Row(
+                modifier = Modifier
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                options.forEachIndexed { index, option ->
+                    RadioButton(
+                        selected = selectedOption == index,
+                        onClick = {
+                            selectedOption = index
+                            isVisible = !isVisible
+                        },
+                    )
+                    Text(text = option)
+
+                }
+            }
 
             Spacer(modifier = Modifier.size(10.dp))
 
@@ -76,18 +110,22 @@ fun HomeScreen(
                         }) namePlayer1 = it
                 }
             )
-            AppTextField(
-                modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
-                text = namePlayer2,
-                label = "Jogador 2",
-                onTextChange = {
-                    if (it.all { char ->
-                            char.isLetter() || char.isWhitespace()
-                        }) namePlayer2 = it
-                }
-            )
-
+            if (!isVisible) {
+                AppTextField(
+                    modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
+                    text = namePlayer2,
+                    label = "Jogador 2",
+                    onTextChange = {
+                        if (it.all { char ->
+                                char.isLetter() || char.isWhitespace()
+                            }) namePlayer2 = it
+                    }
+                )
+            }else{
+                Spacer(modifier = Modifier.paddingFromBaseline(73.dp))
+            }
             Spacer(modifier = Modifier.size(36.dp))
+
             Text(
                 text = "Tamanho do tabuleiro",
                 style = MaterialTheme.typography.h6,
@@ -116,10 +154,16 @@ fun HomeScreen(
                 textColor = Color.White,
                 onClick = {
                     if (namePlayer1.isNotEmpty() && namePlayer2.isNotEmpty()) {
-                        viewModel.addGame(Game(player1 = namePlayer1, player2 = namePlayer2, true))
+                        viewModel.addGame(
+                            Game(
+                                player1 = namePlayer1,
+                                player2 = namePlayer2,
+                                true
+                            )
+                        )
                         namePlayer1 = ""
                         namePlayer2 = ""
-                    }else{
+                    } else {
                         viewModel.addGame(Game(player1 = namePlayer1, player2 = "Bot", true))
                     }
                     navController.navigate("game")
@@ -133,9 +177,5 @@ fun HomeScreen(
                 })
         }
     }
+
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun InitialScreenPreview() {
-//    HomeScreen()
-//}

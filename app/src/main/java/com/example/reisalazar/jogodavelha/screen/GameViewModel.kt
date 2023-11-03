@@ -14,6 +14,10 @@ class GameViewModel : ViewModel() {
         this.gameList.add(game)
     }
 
+    fun getGame(): Game{
+        return gameList.last()
+    }
+
     fun removeGame(game: Game) {
         this.gameList.remove(game)
     }
