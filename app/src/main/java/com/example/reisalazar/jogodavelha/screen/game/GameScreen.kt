@@ -47,8 +47,6 @@ fun GameScreen(navController: NavHostController, gameViewModel: GameViewModel) {
                 textColor = Color(0XFF007AFF),
                 onClick = {
                     navController.popBackStack()
-                    navController.navigate("home")
-
                 })
         }
     }

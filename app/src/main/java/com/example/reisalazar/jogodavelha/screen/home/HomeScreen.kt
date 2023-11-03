@@ -1,5 +1,6 @@
 package com.example.reisalazar.jogodavelha.screen.home
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,11 +36,12 @@ import com.example.reisalazar.jogodavelha.screen.GameViewModel
 
 @Composable
 fun HomeScreen(
-        viewModel: GameViewModel,
-        navController: NavHostController
+    viewModel: GameViewModel,
+    navController: NavHostController
 ) {
     var selectedOption by remember { mutableStateOf(0) }
     val options = listOf("vs Jogador", "vs Bot")
+
     var isVisible by remember { mutableStateOf(false) }
 
     var namePlayer1 by remember {
@@ -47,6 +50,11 @@ fun HomeScreen(
     var namePlayer2 by remember {
         mutableStateOf("")
     }
+
+    val context = LocalContext.current
+
+    var errorState = false
+
     var sliderPosition by remember { mutableStateOf(3f) }
 
 
@@ -155,28 +163,36 @@ fun HomeScreen(
                 backgroundColor = Color(0XFF007AFF),
                 textColor = Color.White,
                 onClick = {
-                    if (namePlayer1.isNotEmpty() && namePlayer2.isNotEmpty()) {
+                    if (namePlayer1.isEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "Insira um nome de jogador sem espaços",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (namePlayer1.isNotEmpty() && namePlayer2.isNotEmpty()) {
                         viewModel.addGame(
                             Game(
                                 player1 = namePlayer1,
                                 player2 = namePlayer2,
                                 boardSize = sliderPosition.toInt(),
-                                true
+                                false
                             )
                         )
                         namePlayer1 = ""
                         namePlayer2 = ""
+                        navController.navigate("game")
+
                     } else {
                         viewModel.addGame(
                             Game(
                                 player1 = namePlayer1,
                                 player2 = "Bot",
                                 boardSize = sliderPosition.toInt(),
-                                true
+                                false
                             )
                         )
+                        navController.navigate("game")
                     }
-                    navController.navigate("game")
                 })
             AppButton(
                 text = "Histórico de Partidas",

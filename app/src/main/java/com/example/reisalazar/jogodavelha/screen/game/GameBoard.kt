@@ -40,8 +40,13 @@ fun GameBoard(game: Game, gameViewModel: GameViewModel) {
         if (currentGame?.currentPlayer == Turn.Player1) game.player1 else game.player2
     val isGameEnding: Boolean = currentGame?.isGamerEnding == true
     val winningPlayer: String =
-        if (currentGame?.winingPlayer == Turn.Player2) game.player2 else game.player1
-
+        if (currentGame?.winingPlayer == Turn.Player2) {
+            game.win = false
+            game.player2
+        } else {
+            game.win = true
+            game.player1
+        }
     Column(
         modifier = Modifier.padding(6.dp),
         verticalArrangement = Arrangement.Center,
@@ -54,6 +59,7 @@ fun GameBoard(game: Game, gameViewModel: GameViewModel) {
         ) {
 
             if (isGameEnding) {
+                game.result = true
                 Text(
                     text = "Vencedor \uD83C\uDFC6",
                     style = MaterialTheme.typography.h5,

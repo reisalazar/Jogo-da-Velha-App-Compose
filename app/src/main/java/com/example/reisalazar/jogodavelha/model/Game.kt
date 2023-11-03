@@ -6,6 +6,7 @@ data class Game(
     val player1: String,
     val player2: String,
     var boardSize: Int = 3,
-    val result: Boolean,
+    var result: Boolean,
+    var win:Boolean = true,
     val entryDate: LocalDateTime = LocalDateTime.now()
 )

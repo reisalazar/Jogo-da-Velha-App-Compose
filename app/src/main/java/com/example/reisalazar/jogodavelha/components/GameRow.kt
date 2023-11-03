@@ -23,49 +23,77 @@ fun GameRow(
     modifier: Modifier = Modifier,
     game: Game
 ) {
+    val winner: String
+    val loser: String
+    val winnerColor: Long
+    val loserColor: Long
 
-    Surface(
-        modifier
-            .padding(4.dp)
-            .fillMaxWidth(),
-    ) {
-        Column(
-            modifier
-                .padding(horizontal = 14.dp, vertical = 6.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
-                Text(
-                    text = "\uD83C\uDFC6 ${game.player1}",
-                    style = MaterialTheme.typography.subtitle1,
-                    color = Color(0XFF007AFF),
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(text = "VS", fontSize = 14.sp, modifier = Modifier.padding(horizontal = 4.dp))
-
-                Text(
-                    text = game.player2,
-                    style = MaterialTheme.typography.subtitle1,
-                    color = Color(0xFFFF0000),
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Row(modifier = Modifier.fillMaxWidth()) {
-
-                Text(
-                    text = game.entryDate.format(DateTimeFormatter.ofPattern("dd-mm-yyyy . hh:mm")),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Color.Gray
-                )
-            }
+    if (game.result) {
+        if (game.win) {
+            winner = game.player1
+            loser = game.player2
+            winnerColor = 0XFF007AFF
+            loserColor = 0xFFFF0000
+        } else {
+            winner = game.player2
+            loser = game.player1
+            winnerColor = 0xFFFF0000
+            loserColor = 0XFF007AFF
         }
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
+        Surface(
+            modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+        ) {
+            Column(
+                modifier
+                    .padding(horizontal = 14.dp, vertical = 6.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
+                gameWinner(
+                    winner = winner,
+                    loser = loser,
+                    winnerColor = winnerColor,
+                    loserColor = loserColor
+                )
+                Row(modifier = Modifier.fillMaxWidth()) {
+
+                    Text(
+                        text = game.entryDate.format(DateTimeFormatter.ofPattern("dd-mm-yyyy . hh:mm")),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Light,
+                        color = Color.Gray
+                    )
+                }
+            }
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+@Composable
+fun gameWinner(winner: String, winnerColor: Long, loser: String, loserColor: Long) {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+        Text(
+            text = "\uD83C\uDFC6 $winner",
+            style = MaterialTheme.typography.subtitle1,
+            color = Color(winnerColor),
+            fontWeight = FontWeight.Bold
         )
 
-    }
+        Text(
+            text = "VS",
+            fontSize = 14.sp,
+            modifier = Modifier.padding(horizontal = 4.dp)
+        )
 
+        Text(
+            text = loser,
+            style = MaterialTheme.typography.subtitle1,
+            color = Color(loserColor),
+            fontWeight = FontWeight.Bold
+        )
+    }
 }

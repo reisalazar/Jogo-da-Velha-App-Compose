@@ -22,6 +22,11 @@ class GameViewModel : ViewModel() {
         gameListState.add(game)
     }
 
+    fun removeGame(game: Game) {
+        this.gameListState.remove(game)
+    }
+
+
     fun getGame(): Game {
         return gameListState.last()
     }
@@ -35,11 +40,9 @@ class GameViewModel : ViewModel() {
         this.gameListState.addAll(GameListDataSource().loadGame())
     }
 
-//    fun getBoardSpaces() = boardSpaces
-
     fun getTurn(): GameTurn? {
-    return gameTurnState
-}
+        return gameTurnState
+    }
 
     fun getBoardSpaces() = boardSpacesState
 
@@ -53,8 +56,8 @@ class GameViewModel : ViewModel() {
 
             MutableList(3) {
                 BoardSpaces(
-                        indexColumn = indexColumn++ / 3,
-                        indexRow = indexRow++
+                    indexColumn = indexColumn++ / 3,
+                    indexRow = indexRow++
                 )
             }
         }
@@ -94,9 +97,13 @@ class GameViewModel : ViewModel() {
         // Columns
         (0..2).forEach { index ->
             if (
-                    boardSpacesState.value.get(index = index)[0].turn == boardSpacesState.value.get(index = index)[1].turn &&
-                    boardSpacesState.value.get(index = index)[1].turn == boardSpacesState.value.get(index = index)[2].turn &&
-                    boardSpacesState.value.get(index = index)[2].turn != Turn.Blank
+                boardSpacesState.value.get(index = index)[0].turn == boardSpacesState.value.get(
+                    index = index
+                )[1].turn &&
+                boardSpacesState.value.get(index = index)[1].turn == boardSpacesState.value.get(
+                    index = index
+                )[2].turn &&
+                boardSpacesState.value.get(index = index)[2].turn != Turn.Blank
             ) {
                 gameTurnState?.isGamerEnding = true
                 gameTurnState?.winingPlayer = boardSpacesState.value.get(index = index)[2].turn
@@ -106,9 +113,12 @@ class GameViewModel : ViewModel() {
         // Row
         (0..2).forEach { index ->
             if (
-                    boardSpacesState.value[0].get(index = index).turn == boardSpacesState.value[1].get(index = index).turn &&
-                    boardSpacesState.value[1].get(index = index).turn == boardSpacesState.value.get(2).get(index = index).turn &&
-                    boardSpacesState.value[2].get(index = index).turn != Turn.Blank
+                boardSpacesState.value[0].get(index = index).turn == boardSpacesState.value[1].get(
+                    index = index
+                ).turn &&
+                boardSpacesState.value[1].get(index = index).turn == boardSpacesState.value.get(2)
+                    .get(index = index).turn &&
+                boardSpacesState.value[2].get(index = index).turn != Turn.Blank
             ) {
                 gameTurnState?.isGamerEnding = true
                 gameTurnState?.winingPlayer = boardSpacesState.value[2].get(index = index).turn
@@ -117,17 +127,18 @@ class GameViewModel : ViewModel() {
 
         // Diagonals
         if (boardSpacesState.value[0][0].turn != boardSpacesState.value[1][1].turn ||
-                boardSpacesState.value[1][1].turn != boardSpacesState.value[2][2].turn ||
-                boardSpacesState.value[2][2].turn == Turn.Blank) {
+            boardSpacesState.value[1][1].turn != boardSpacesState.value[2][2].turn ||
+            boardSpacesState.value[2][2].turn == Turn.Blank
+        ) {
         } else {
             gameTurnState?.isGamerEnding = true
             gameTurnState?.winingPlayer = boardSpacesState.value[1][1].turn
         }
 
         if (
-                boardSpacesState.value[0][2].turn == boardSpacesState.value[1][1].turn &&
-                boardSpacesState.value[1][1].turn == boardSpacesState.value[2][0].turn &&
-                boardSpacesState.value[2][0].turn != Turn.Blank
+            boardSpacesState.value[0][2].turn == boardSpacesState.value[1][1].turn &&
+            boardSpacesState.value[1][1].turn == boardSpacesState.value[2][0].turn &&
+            boardSpacesState.value[2][0].turn != Turn.Blank
         ) {
             gameTurnState?.isGamerEnding = true
             gameTurnState?.winingPlayer = boardSpacesState.value[1][1].turn
