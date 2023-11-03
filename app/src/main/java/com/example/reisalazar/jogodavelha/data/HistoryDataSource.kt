@@ -1,7 +1,6 @@
 package com.example.reisalazar.jogodavelha.data
 
 import com.example.reisalazar.jogodavelha.model.Game
-import java.time.LocalDateTime
 
 class HistoryDataSource {
     fun loadGame(): List<Game> {

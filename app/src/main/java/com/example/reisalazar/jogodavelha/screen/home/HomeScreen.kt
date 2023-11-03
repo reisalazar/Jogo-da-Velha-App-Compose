@@ -14,14 +14,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.reisalazar.jogodavelha.R
 import com.example.reisalazar.jogodavelha.components.AppButton
 import com.example.reisalazar.jogodavelha.components.AppTextField
 import com.example.reisalazar.jogodavelha.components.RadioOptions
-import com.example.reisalazar.jogodavelha.model.Game
 
 @Composable
-fun InitialScreen() {
+fun HomeScreen(
+//    onAddGame: (Game) -> Unit,
+    navController: NavHostController) {
     var namePlayer1 by remember {
         mutableStateOf("")
     }
@@ -95,10 +97,11 @@ fun InitialScreen() {
                 fontWeight = FontWeight.Bold
             )
 
-            var sliderPosition by remember { mutableStateOf(0f) }
+            var sliderPosition by remember { mutableStateOf(3f) }
             Text(
                 text = sliderPosition.toInt().toString(),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold
             )
 
             Slider(value = sliderPosition,
@@ -117,11 +120,11 @@ fun InitialScreen() {
                 textColor = Color.White,
                 onClick = {
                     if (namePlayer1.isNotEmpty() && namePlayer2.isNotEmpty()) {
-//                        onAddNote(Game(player1 = namePlayer1, opponent = namePlayer2))
+//                        onAddGameGame(player1 = namePlayer1, opponent = namePlayer2))
                         namePlayer1 = ""
                         namePlayer2 = ""
-                        Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
                     }
+                        navController.navigate("game")
                 })
             AppButton(
                 text = "Histórico de Partidas",
@@ -129,20 +132,18 @@ fun InitialScreen() {
                 textColor = Color(0XFF007AFF),
                 onClick = {
                     if (namePlayer1.isNotEmpty() && namePlayer2.isNotEmpty()) {
-//                        onAddNote(Game(player1 = namePlayer1, opponent = namePlayer2))
+//                        onAddGame(Game(player1 = namePlayer1, opponent = namePlayer2))
                         namePlayer1 = ""
                         namePlayer2 = ""
-                        Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
                     }
+                        navController.navigate("history")
                 })
         }
     }
 
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun InitialScreenPreview() {
-    InitialScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun InitialScreenPreview() {
+//    HomeScreen()
+//}

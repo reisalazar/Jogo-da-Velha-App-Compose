@@ -20,12 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.reisalazar.jogodavelha.components.AppButton
 import com.example.reisalazar.jogodavelha.model.Game
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen() {
+fun GameScreen(navController: NavHostController) {
     var turn: Boolean = true
     val game = Game("player1", "opponent", true)
     Scaffold() {
@@ -64,7 +65,7 @@ fun GameScreen() {
             val list = (1..10).map { it.toString() }
 
             LazyColumn {
-                itemsIndexed((1..5).map { it.toString() }) { _, row ->
+                itemsIndexed((1..3).map { it.toString() }) { _, row ->
                     LazyRow {
                         itemsIndexed(list) { _, column ->
 
@@ -91,32 +92,25 @@ fun GameScreen() {
                 text = "Recomeçar",
                 backgroundColor = Color(0XFF007AFF),
                 textColor = Color.White,
-                onClick = { }
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate("game")
+                }
                 )
             AppButton(
                 text = "Novo Jogo",
                 backgroundColor = Color(0XFFD9EBFF),
                 textColor = Color(0XFF007AFF),
-                onClick = {})
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate("home")
 
+                })
         }
-
-
     }
-
 }
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun LazyVerticalGrid(
-    cells: GridCells,
-    modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    content: LazyGridScope.() -> Unit
-) {  }
-
-@Preview(showBackground = true)
-@Composable
-fun GameScreenPreview() {
-    GameScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GameScreenPreview() {
+//    GameScreen()
+//}
